@@ -11,13 +11,6 @@
   background-color: #ef5d23;
 }
 
-.sptag a, a:link, a:visited, a:active, a:hover {
-  text-decoration: none;
-  font-weight: bold;
-  font-family: Arial;
-  color: #4c4c4c;
-}
-
 .sphere {
   width: 300px;
   height: 300px;

@@ -194,8 +194,10 @@ function mouseout(el) {
 }
 
 onload = function() {
-  _cnt = taga.length;
-  setTimeout(function() {
-    initSphere(_cnt, _Rad);
-  }, 100);
+  if (taga) {
+    _cnt = taga.length;
+    setTimeout(function() {
+      initSphere(_cnt, _Rad);
+    }, 100);
+  }
 }
