@@ -7,11 +7,11 @@ var taga,
   _cnt = 12,
   OB = 0.15,
   FB = 8, // font-size
-  FE = 12, // font-size
-  CT = 150-FE,
-  CL = 150-FE,
-  CZ = 150-FE,
-  _Rad = 150-FE,
+  FE = 9, // font-size
+  CT = 150 - FE,
+  CL = 150 - FE,
+  CZ = 150 - FE,
+  _Rad = 150 - FE,
   to = null,
   TMR = 1000,
   state = 0, //0 -idle, 1-go to
@@ -20,7 +20,8 @@ var taga,
   zax = 0,
   zay = 0,
   zaz = 0,
-  lto = null;
+  lto = null,
+  hideText = null;
 
 function did(el) {
   return document.getElementById(el);
@@ -55,21 +56,47 @@ function initSphere(numpnt, radius) {
     el.id = "pnt" + n;
     el.innerHTML = "<span>" + taga[n - 1].name + "</span> <span class='num'> " + taga[n - 1].num + "</span>";
     el.n = n;
-    el.className = "sptag";
-    left = (CL + x - el.style.width / 2);
-    top = (CT + y);
+    if (taga[n - 1].bg) {
+      el.className = "sptag priority";
+    } else {
+      el.className = "sptag";
+    }
+    left = CL + x - el.style.width / 2;
+    top = CT + y;
+    el.dataset.text = taga[n - 1].text;
     el.dataset.top = top;
     el.dataset.left = left;
     setStyles(el, {
       transform: "translate(" + left + "px, " + top + "px)",
       zIndex: z
     });
-    el.onmouseover = function() {
+    el.onmouseover = function(e) {
       mouseover(this);
+
+      clearTimeout(hideText);
+
+      var sphereText = document.getElementById('sphere-text');
+      sphereText.innerText = this.dataset.text;
+
+      setStyles(sphereText, {
+        display: 'block'
+      });
+      setStyles(sphereText, {
+        top: e.clientY+50+ 'px',
+        left: e.clientX-sphereText.offsetWidth + 'px'
+      });
     };
     el.onmouseout = function() {
-      mouseout(this)
+      mouseout(this);
+
+      hideText = setTimeout(function() {
+        var sphereText = document.getElementById('sphere-text');
+        setStyles(sphereText, {
+          display: 'none'
+        });
+      }, 100);
     };
+
     document.getElementById('sphere').appendChild(el);
 
   }
@@ -139,16 +166,7 @@ function rotateth() {
       break;
     case 1:
       ada = ADA;
-      if (tmr >= 100) {
-        state = 2;
-        to = setTimeout(function() {
-          state = 0;
-          tmr = 0;
-          ada = ADA;
-          rotateth();
-        }, 5000);
-        return;
-      }
+
       tmr++;
       break;
   }
@@ -192,4 +210,4 @@ onload = function() {
       initSphere(_cnt, _Rad);
     }, 100);
   }
-}
+};

@@ -15,13 +15,14 @@ function custom_table_example_install() {
     global $wpdb;
     global $custom_table_example_db_version;
 
-    $table_name = $wpdb->prefix . 'sphere';
+    $table_name = $wpdb->prefix . 'sphere_text';
 
     $sql = "CREATE TABLE " . $table_name . " (
       id int(11) NOT NULL AUTO_INCREMENT,
       name tinytext NOT NULL,
       text tinytext NOT NULL,
       num int(11) NULL,
+      bg int(1) NULL,
       PRIMARY KEY (id)
     );";
 
@@ -57,7 +58,7 @@ register_activation_hook(__FILE__, 'custom_table_example_install');
 function custom_table_example_install_data() {
     global $wpdb;
 
-    $table_name = $wpdb->prefix . 'sphere'; // do not forget about tables prefix
+    $table_name = $wpdb->prefix . 'sphere_text'; // do not forget about tables prefix
 }
 
 register_activation_hook(__FILE__, 'custom_table_example_install_data');
@@ -142,7 +143,7 @@ class Custom_Table_Example_List_Table extends WP_List_Table {
 
     function process_bulk_action() {
         global $wpdb;
-        $table_name = $wpdb->prefix . 'sphere'; // do not forget about tables prefix
+        $table_name = $wpdb->prefix . 'sphere_text'; // do not forget about tables prefix
 
         if ('delete' === $this->current_action()) {
             $ids = isset($_REQUEST['id']) ? $_REQUEST['id'] : array();
@@ -156,7 +157,7 @@ class Custom_Table_Example_List_Table extends WP_List_Table {
 
     function prepare_items() {
         global $wpdb;
-        $table_name = $wpdb->prefix . 'sphere'; // do not forget about tables prefix
+        $table_name = $wpdb->prefix . 'sphere_text'; // do not forget about tables prefix
 
         $per_page = 20; // constant, how much records will be shown per page
 
@@ -231,7 +232,7 @@ function custom_table_example_sphere_page_handler() {
 
 function custom_table_example_sphere_form_page_handler() {
     global $wpdb;
-    $table_name = $wpdb->prefix . 'sphere'; // do not forget about tables prefix
+    $table_name = $wpdb->prefix . 'sphere_text'; // do not forget about tables prefix
 
     $message = '';
     $notice = '';
@@ -384,15 +385,17 @@ function sphere_shortcode($atts){
   if ($atts['count'] != '-1') {
     $limit = $atts['count'];
   }
-  $table_name = $wpdb->prefix . 'sphere'; // do not forget about tables prefix
+  $table_name = $wpdb->prefix . 'sphere_text'; // do not forget about tables prefix
 
   $items = $wpdb->get_results($wpdb->prepare("SELECT * FROM $table_name LIMIT %d", $limit), ARRAY_A);
 ?>
+
+  <div class="sphere-text" id="sphere-text"></div>
   <div id="sphere" class="sphere">
     <?php
       echo "<script>taga = [";
       foreach ($items as $item) {
-        echo "{name: '".$item['name']."', text: '".$item['text']."', num: ".$item['num']."}, ";
+        echo "{name: '".$item['name']."', text: '".$item['text']."', num: ".$item['num'].", bg: ".$item['bg']."}, ";
       }
       echo "];</script>";
     ?>

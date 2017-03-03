@@ -1,13 +1,13 @@
-.sptag {
+.sphere .sptag {
   font-family: Arial;
   position: absolute;
   text-decoration: none;
   color: #4c4c4c;
-  display: inline-block;
   border: 1px solid #4c4c4c;
+  font-weight: bold;
 }
 
-.sptag.priority {
+.sphere .sptag.priority {
   background-color: #ef5d23;
 }
 
@@ -24,4 +24,21 @@
 .sphere .sptag .num {
     border-left: 1px solid #4c4c4c;
     display: inline-block;
+}
+
+.sphere-text {
+    position: fixed;
+    font-size: 18px;
+    border: 1px solid #000000;
+    color: #000000;
+    background-color: #ffffff;
+    display: none;
+    z-index: 999999;
+    border-radius: 5px;
+    padding: 10px;
+    max-width: 400px;
+}
+
+.sphere-text:hover {
+  display: block !important;
 }
