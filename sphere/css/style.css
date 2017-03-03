@@ -16,4 +16,12 @@
   height: 300px;
   position: relative;
   overflow: hidden;
+  border: 1px solid #4c4c4c;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+.sphere .sptag .num {
+    border-left: 1px solid #4c4c4c;
+    display: inline-block;
 }

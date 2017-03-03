@@ -4,31 +4,23 @@ var taga,
   za = 0,
   ADA = (Math.PI / 180),
   ada = ADA,
-  CT = 120,
-  CL = 120,
-  CZ = 120,
-  _Rad = 120,
   _cnt = 12,
   OB = 0.15,
-  FB = 8,
-  FE = 12,
+  FB = 8, // font-size
+  FE = 12, // font-size
+  CT = 150-FE,
+  CL = 150-FE,
+  CZ = 150-FE,
+  _Rad = 150-FE,
   to = null,
   TMR = 1000,
-  state = 2, //0 -idle, 1-go to
+  state = 0, //0 -idle, 1-go to
   tmr = 0,
   ttmr = 0,
   zax = 0,
   zay = 0,
   zaz = 0,
   lto = null;
-
-function grad(v) {
-  return v * 180 / Math.PI;
-}
-
-function rad(v) {
-  return v * Math.PI / 180;
-}
 
 function did(el) {
   return document.getElementById(el);
@@ -61,7 +53,7 @@ function initSphere(numpnt, radius) {
 
     var el = document.createElement('div');
     el.id = "pnt" + n;
-    el.innerHTML = "<span>" + taga[n - 1].name + "</span>";
+    el.innerHTML = "<span>" + taga[n - 1].name + "</span> <span class='num'> " + taga[n - 1].num + "</span>";
     el.n = n;
     el.className = "sptag";
     left = (CL + x - el.style.width / 2);
@@ -140,7 +132,7 @@ function rotateth() {
     case 0:
       if (tmr > 0) tmr--;
       else {
-        ada = 0.0001 + ADA / 2 * Math.random() * ((Math.random() > 0.7) ? 1 : -1);
+        ada = 0.0001 + ADA / 2;
         tmr = TMR;
       }
       dax = day = daz = ada;

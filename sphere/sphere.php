@@ -118,6 +118,7 @@ class Custom_Table_Example_List_Table extends WP_List_Table {
             'name' => __('Name', 'custom_table_example'),
             'text' => __('Text', 'custom_table_example'),
             'num' => __('Num', 'custom_table_example'),
+            'bg' => __('Background', 'custom_table_example'),
         );
         return $columns;
     }
@@ -127,6 +128,7 @@ class Custom_Table_Example_List_Table extends WP_List_Table {
             'name' => array('name', true),
             'text' => array('text', false),
             'num' => array('num', false),
+            'bg' => array('bg', false),
         );
         return $sortable_columns;
     }
@@ -156,7 +158,7 @@ class Custom_Table_Example_List_Table extends WP_List_Table {
         global $wpdb;
         $table_name = $wpdb->prefix . 'sphere'; // do not forget about tables prefix
 
-        $per_page = 5; // constant, how much records will be shown per page
+        $per_page = 20; // constant, how much records will be shown per page
 
         $columns = $this->get_columns();
         $hidden = array();
@@ -240,6 +242,7 @@ function custom_table_example_sphere_form_page_handler() {
         'name' => '',
         'text' => '',
         'num' => null,
+        'bg' => 0
     );
 
       if (isset($_REQUEST['nonce']) && wp_verify_nonce($_REQUEST['nonce'], basename(__FILE__))) {
@@ -339,6 +342,14 @@ function custom_table_example_sphere_form_meta_box_handler($item) {
         <td>
             <input id="num" name="num" type="number" style="width: 95%" value="<?php echo esc_attr($item['num'])?>"
                    size="50" class="code" placeholder="<?php _e('Your num', 'custom_table_example')?>" required>
+        </td>
+    </tr>
+    <tr class="form-field">
+        <th valign="top" scope="row">
+            <label for="bg"><?php _e('Background', 'custom_table_example')?></label>
+        </th>
+        <td>
+            <input id="bg" name="bg" type="checkbox" value="1" <?php if ($item['bg'] == '1') echo 'checked'; ?>>
         </td>
     </tr>
     </tbody>
